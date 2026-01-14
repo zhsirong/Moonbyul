@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  background: #050505;
+  color: #e2e2e2;
+  overflow-x: hidden;
+}
+
+/* 巨型小字 - 杂志排版核心 */
+.subtitle-text {
+  font-size: 1.5rem; /* PC端基础字号 */
+  letter-spacing: 1.2em; /* 保持高级感的极宽间距 */
+  font-weight: 800;
+  color: #d2a6f7;
+  text-transform: uppercase;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 1.5rem 0;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* 流星雨容器 */
+.night-sky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: radial-gradient(circle at center, #0f051a 0%, #000000 100%);
+  overflow: hidden;
+}
+
+/* 流星本体：大尺寸 + 强发光 */
+.shooting-star {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 20px 4px #fff, 0 0 40px 10px #a78bfa;
+  opacity: 0;
+  animation: meteor-fall var(--duration, 3s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  pointer-events: none;
+}
+
+/* 强化的长尾巴 */
+.shooting-star::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 600px; 
+  height: 3px;
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 1) 0%, 
+    rgba(167, 139, 250, 0.5) 50%, 
+    transparent 100%
+  );
+}
+
+@keyframes meteor-fall {
+  0% { transform: rotate(315deg) translateX(400px); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: rotate(315deg) translateX(-2000px); opacity: 0; }
+}
+
+/* 手机端适配：防止字号过大撑爆屏幕 */
+@media (max-width: 768px) {
+  .responsive-title {
+    font-size: 5rem !important;
+    line-height: 1;
+  }
+  .subtitle-text {
+    font-size: 0.75rem !important;
+    letter-spacing: 0.3em !important;
+    padding: 1rem 0;
+  }
+}
+
+/* 随机分布逻辑 */
+.shooting-star:nth-child(4n) { top: 10%; left: 80%; --delay: 0s; --duration: 2.5s; }
+.shooting-star:nth-child(4n+1) { top: 30%; left: 40%; --delay: 1.5s; --duration: 3s; }
+.shooting-star:nth-child(4n+2) { top: 50%; left: 90%; --delay: 3s; --duration: 2s; }
+.shooting-star:nth-child(4n+3) { top: -10%; left: 20%; --delay: 4.5s; --duration: 3.5s; }
