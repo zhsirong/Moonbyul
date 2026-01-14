@@ -1,6 +1,8 @@
 import { MOONBYUL_IMAGES, MOONBYUL_VIDEOS } from "../data";
 import Gallery from "../components/Gallery";
 import VideoCard from "../components/VideoCard";
+import IconicVideoCard from "../components/IconicVideoCard";
+import { MOONBYUL_ICONIC } from "../data";
 
 export default function Home() {
   return (
@@ -47,7 +49,39 @@ export default function Home() {
             <Gallery items={MOONBYUL_IMAGES} />
           </div>
         </main>
+{/* Section 02: Moonbyul 知名瞬间（本地视频） */}
+<section className="max-w-[1700px] mx-auto px-6 md:px-16 mb-48 md:mb-80">
+  <div className="flex items-center gap-6 md:gap-12 mb-16 md:mb-32">
+    <span className="text-sm md:text-xl font-mono tracking-widest text-violet-300 font-bold uppercase">
+      SCENE 02 // ICONIC MOMENTS
+    </span>
+    <div className="h-[1px] md:h-[2px] flex-1 bg-gradient-to-r from-violet-600 to-transparent" />
+  </div>
 
+  <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
+    {/* 左：一张超大主视频，强视觉中心 */}
+    <div className="md:col-span-8">
+      <IconicVideoCard
+        src={MOONBYUL_ICONIC[0].src}
+        title={MOONBYUL_ICONIC[0].title}
+      />
+    </div>
+
+    {/* 右：两张小的堆叠（更杂志感） */}
+    <div className="md:col-span-4 flex flex-col gap-10 md:gap-16">
+      {MOONBYUL_ICONIC.slice(1, 3).map((v) => (
+        <IconicVideoCard key={v.id} src={v.src} title={v.title} />
+      ))}
+    </div>
+
+    {/* 下：横向一张（可选，放第4个） */}
+    {MOONBYUL_ICONIC[3] && (
+      <div className="md:col-span-12">
+        <IconicVideoCard src={MOONBYUL_ICONIC[3].src} title={MOONBYUL_ICONIC[3].title} />
+      </div>
+    )}
+  </div>
+</section>
         {/* Section 02: 视频集锦 - 保持非对称排版 */}
         <section className="max-w-[1700px] mx-auto px-6 md:px-16">
           <div className="flex items-center gap-6 md:gap-12 mb-16 md:mb-32">

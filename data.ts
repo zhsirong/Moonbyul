@@ -16,6 +16,25 @@ export const MOONBYUL_IMAGES = [
   // 更多图片...
 ];
 
+export const MOONBYUL_ICONIC = [
+  {
+    id: "iconic-1",
+    title: "知名保持湿润梗",
+    src: "/videos/知名保持湿润梗.mp4",
+  },
+  {
+    id: "iconic-2",
+    title: "我的女人手不能沾水",
+    src: "/videos/知名我的女人手不能沾水.mp4",
+  },
+  {
+    id: "iconic-3",
+    title: "说粉丝是变态第一人",
+    src: "/videos/说粉丝是变态第一人.mp4",
+  },
+];
+
+
 export const MOONBYUL_VIDEOS = [
   { id: "C5D-cyVBY6Y" }, // vlog综艺
   { id: "l-fZh5Maq0k" }, // lunatic MV
