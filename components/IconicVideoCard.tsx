@@ -71,44 +71,37 @@ export default function IconicVideoCard({
   }, []);
 
   const toggleFullscreenAndSound = async () => {
-    const el = videoRef.current;
-    if (!el) return;
+  const el = videoRef.current;
+  if (!el) return;
 
-    // 已全屏：退出
-    if (document.fullscreenElement) {
-      await document.exitFullscreen().catch((err) => {
-        console.log("[IconicVideoCard] exitFullscreen failed:", err);
-      });
-      return;
+  // 已全屏：退出
+  if (document.fullscreenElement) {
+    await document.exitFullscreen().catch(() => {});
+    return;
+  }
+
+  // 未全屏：先开声音
+  el.muted = false;
+  el.volume = 1;
+
+  try {
+    // ✅ 最关键：先播放（用户点击手势）
+    await el.play();
+
+    // ✅ 再进全屏
+    if (el.requestFullscreen) {
+      await el.requestFullscreen();
     }
-
-    try {
-      // 用户点击手势内：解除静音 + 播放
-      el.muted = false;
-      el.volume = 1;
-
-      await waitUntilPlayable(el);
-      await el.play().catch((err) => {
-        console.log("[IconicVideoCard] play on click blocked:", err);
-      });
-
-      // 进入全屏（标准）
-      if (el.requestFullscreen) {
-        await el.requestFullscreen().catch((err) => {
-          console.log("[IconicVideoCard] requestFullscreen failed:", err);
-        });
-      }
-
-      // iOS Safari 兜底（部分机型）
+    // iOS Safari 兜底
+    // @ts-ignore
+    else if (el.webkitEnterFullscreen) {
       // @ts-ignore
-      if (el.webkitEnterFullscreen) {
-        // @ts-ignore
-        el.webkitEnterFullscreen();
-      }
-    } catch (err) {
-      console.log("[IconicVideoCard] toggle failed:", err);
+      el.webkitEnterFullscreen();
     }
-  };
+  } catch (err) {
+    console.log("CLICK PLAY FAILED:", err);
+  }
+};
 
   return (
     <div
@@ -143,12 +136,14 @@ export default function IconicVideoCard({
 
       {/* 左上角标题 */}
       <div className="absolute top-6 left-6 z-10 text-xs md:text-sm text-zinc-200 tracking-widest uppercase pointer-events-none">
+
         Moonbyul Moment
       </div>
 
       {/* 左下角标题（可选） */}
       {title && (
         <div className="absolute bottom-6 left-6 right-6 z-10 pointer-events-none">
+
           <div className="text-sm md:text-base text-white/90 font-semibold">
             {title}
           </div>

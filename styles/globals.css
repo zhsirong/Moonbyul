@@ -89,3 +89,35 @@ body {
 .shooting-star:nth-child(4n+1) { top: 30%; left: 40%; --delay: 1.5s; --duration: 3s; }
 .shooting-star:nth-child(4n+2) { top: 50%; left: 90%; --delay: 3s; --duration: 2s; }
 .shooting-star:nth-child(4n+3) { top: -10%; left: 20%; --delay: 4.5s; --duration: 3.5s; }
+
+/* 留言弹幕专用动画：从右上向左下斜飞 */
+.message-star {
+  position: fixed;
+  white-space: nowrap;
+  pointer-events: none;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(167, 139, 250, 0.8);
+  z-index: 50;
+  /* 初始位置在屏幕外右侧 */
+  transform: rotate(315deg) translateX(500px); 
+  animation: message-fall linear forwards;
+}
+
+/* 弹幕后的发光尾巴 */
+.message-star::after {
+  content: "";
+  position: absolute;
+  right: -120px;
+  top: 50%;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.6), transparent);
+}
+
+@keyframes message-fall {
+  0% { transform: rotate(315deg) translateX(600px); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: rotate(315deg) translateX(-2500px); opacity: 0; }
+}
