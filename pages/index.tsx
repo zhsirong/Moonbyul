@@ -92,9 +92,109 @@ export default function Home() {
             The Soloist & Muse / 玟星
           </p>
         </header>
-<p className="mt-10 max-w-[680px] mx-auto text-sm md:text-base text-zinc-300 leading-relaxed tracking-wide">
-  Moonbyul is a soloist who turns restraint into power — a voice that speaks softly, yet never fades.
-</p>
+
+{/* Intro + Profile Card */}
+<div className="mt-10 md:mt-14 px-4">
+  <div className="max-w-[980px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start">
+    
+    {/* Left: Editorial Intro */}
+    <div className="md:col-span-7 text-left">
+      <p className="text-sm md:text-base text-zinc-200/90 leading-relaxed tracking-wide">
+        <span className="text-violet-200 font-semibold">Moonbyul</span> (문별) is a South Korean rapper, singer, and songwriter under RBW.
+        She is best known as a member of <span className="text-violet-200 font-semibold">MAMAMOO</span> and its sub-unit <span className="text-violet-200 font-semibold">MAMAMOO+</span>.
+        Born <span className="text-violet-200 font-semibold">Moon Byul-yi</span> (문별이) on <span className="text-violet-200 font-semibold">Dec 22, 1992</span> in Bucheon, she’s recognized for a restrained-yet-powerful stage presence and extensive songwriting credits. :contentReference[oaicite:1]{index=1}
+      </p>
+
+      <div className="mt-6 flex flex-wrap gap-2">
+        {[
+          "Rapper · Vocalist · Songwriter",
+          "MAMAMOO / MAMAMOO+",
+          "RBW Entertainment",
+          "Moon × Star = ‘Moonbyul’",
+        ].map((tag) => (
+          <span
+            key={tag}
+            className="px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-[11px] md:text-xs text-zinc-200/90 tracking-widest"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    {/* Right: Channel glass card */}
+    <aside className="md:col-span-5">
+      <div className="rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-[0_0_70px_rgba(139,92,246,0.18)] overflow-hidden">
+        <div className="p-6 md:p-7">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="text-[11px] tracking-[0.45em] uppercase text-violet-300 font-bold">
+                Official Channel
+              </div>
+              <div className="mt-2 text-lg md:text-xl font-semibold text-white/90">
+                문별이다 moonbyul2da
+              </div>
+              <div className="mt-1 text-sm text-zinc-300/90">
+                @moonbyul2da
+              </div>
+            </div>
+
+            <div className="text-right">
+              <div className="text-[11px] text-zinc-300/80 tracking-widest">
+                296K subscribers
+              </div>
+              <div className="text-[11px] text-zinc-300/80 tracking-widest mt-1">
+                241 videos
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-5 h-px bg-gradient-to-r from-violet-500/60 via-white/10 to-transparent" />
+
+          <p className="mt-5 text-sm md:text-[15px] leading-relaxed text-zinc-200/90">
+            안녕하세요 문별입니다.
+            <span className="text-zinc-400/80"> …more</span>
+          </p>
+
+          <div className="mt-6 flex flex-col gap-3">
+            <a
+              href="https://www.youtube.com/moonbyul2da"
+              target="_blank"
+              rel="noreferrer"
+              className="group flex items-center justify-between rounded-xl border border-white/10 bg-black/20 px-4 py-3 hover:border-violet-400/60 transition"
+            >
+              <span className="text-sm text-white/90 tracking-widest">
+                Open YouTube
+              </span>
+              <span className="text-xs text-zinc-300/80 group-hover:text-violet-200 transition">
+                ↗
+              </span>
+            </a>
+
+            <a
+              href="https://www.instagram.com/mo_onbyul/"
+              target="_blank"
+              rel="noreferrer"
+              className="group flex items-center justify-between rounded-xl border border-white/10 bg-black/20 px-4 py-3 hover:border-violet-400/60 transition"
+            >
+              <span className="text-sm text-white/90 tracking-widest">
+                instagram.com/mo_onbyul
+              </span>
+              <span className="text-xs text-zinc-300/80 group-hover:text-violet-200 transition">
+                ↗
+              </span>
+            </a>
+          </div>
+
+          <p className="mt-5 text-[11px] text-zinc-400/70 leading-relaxed">
+            Channel name & handle shown as “문별이다 moonbyul2da / @moonbyul2da”. :contentReference[oaicite:2]{index=2}
+          </p>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
 
         {/* Section 01: 图片画廊 */}
         <main className="max-w-[1400px] mx-auto px-6 md:px-16 mb-48 md:mb-80">
