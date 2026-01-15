@@ -61,7 +61,7 @@ export default function Home() {
       {/* 3) 前景内容统一放在 z-10 容器里 */}
       <div className="relative z-10 w-full">
         {/* Header */}
-        <header className="py-32 md:py-64 text-center px-4 overflow-hidden">
+        <header className="pt-28 pb-14 md:pt-44 md:pb-20 text-center px-4 overflow-hidden">
           <h1 className="text-[6rem] md:text-[18rem] lg:text-[22rem] font-serif italic tracking-tighter bg-gradient-to-b from-white via-violet-100 to-violet-500 bg-clip-text text-transparent drop-shadow-[0_0_80px_rgba(139,92,246,0.6)] leading-[0.8] break-all">
             Moonbyul
           </h1>
@@ -70,11 +70,11 @@ export default function Home() {
           </p>
 
           {/* Intro + Profile Card */}
-          <div className="mt-10 md:mt-14 px-4">
-            <div className="max-w-[980px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start">
+          <div className="mt-12 md:mt-20 px-6">
+  <div className="max-w-[1200px] 2xl:max-w-[1320px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-14 items-start">
               {/* Left: Editorial Intro */}
-              <div className="md:col-span-7 text-left">
-                <p className="text-sm md:text-base text-zinc-200/90 leading-relaxed tracking-wide">
+              <div className="md:col-span-7 lg:col-span-8 text-left">
+  <p className="text-[13px] md:text-[15px] lg:text-[16px] text-zinc-200/90 leading-relaxed tracking-wide">
                   <span className="text-violet-200 font-semibold">Moonbyul</span>{" "}
                   (문별) is a South Korean rapper, singer, and songwriter under
                   RBW. She is best known as a member of{" "}
@@ -104,7 +104,7 @@ export default function Home() {
                   ].map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-[11px] md:text-xs text-zinc-200/90 tracking-widest"
+                      className="px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-[12px] md:text-[13px] text-zinc-200/90 tracking-widest"
                     >
                       {tag}
                     </span>
@@ -113,15 +113,16 @@ export default function Home() {
               </div>
 
               {/* Right: Channel glass card */}
-              <aside className="md:col-span-5">
-                <div className="rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-[0_0_70px_rgba(139,92,246,0.18)] overflow-hidden">
-                  <div className="p-6 md:p-7">
+              <aside className="md:col-span-5 lg:col-span-4">
+  <div className="rounded-[30px] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-[0_0_90px_rgba(139,92,246,0.22)] overflow-hidden">
+    <div className="p-7 md:p-8">
+                  
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <div className="text-[11px] tracking-[0.45em] uppercase text-violet-300 font-bold">
                           Official Channel
                         </div>
-                        <div className="mt-2 text-lg md:text-xl font-semibold text-white/90">
+                        <div className="mt-2 text-xl md:text-2xl font-semibold text-white/90">
                           문별이다 moonbyul2da
                         </div>
                         <div className="mt-1 text-sm text-zinc-300/90">
