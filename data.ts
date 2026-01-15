@@ -39,8 +39,6 @@ export const MOONBYUL_ICONIC = [
   },
 ];
 
-
-
 export const MOONBYUL_VIDEOS = [
   { id: "C5D-cyVBY6Y" }, // vlog综艺
   { id: "l-fZh5Maq0k" }, // lunatic MV

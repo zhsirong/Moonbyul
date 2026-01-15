@@ -10,16 +10,33 @@ export default function IconicVideoCard({
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // ✅ 进入视口自动播放（手机端“停留中间播放”效果）
+  // ✅ 等视频到可播放状态（避免 IntersectionObserver 里 play 太早导致黑屏/卡住）
+  const waitUntilPlayable = (el: HTMLVideoElement) => {
+    if (el.readyState >= 2) return Promise.resolve(); // HAVE_CURRENT_DATA
+    return new Promise<void>((resolve) => {
+      const onReady = () => resolve();
+      el.addEventListener("loadeddata", onReady, { once: true });
+      el.addEventListener("canplay", onReady, { once: true });
+    });
+  };
+
+  // ✅ 进入视口自动播放（更稳：先等 canplay）
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
 
     const io = new IntersectionObserver(
-      ([entry]) => {
+      async ([entry]) => {
         if (!el) return;
+
         if (entry.isIntersecting) {
-          el.play().catch(() => {});
+          try {
+            // 等到能播再 play，避免卡死
+            await waitUntilPlayable(el);
+            await el.play();
+          } catch (err) {
+            console.log("[IconicVideoCard] play blocked:", err);
+          }
         } else {
           el.pause();
         }
@@ -31,12 +48,24 @@ export default function IconicVideoCard({
     return () => io.disconnect();
   }, []);
 
-  // ✅ 监听全屏状态变化
+  // ✅ 监听全屏状态变化：退出全屏后恢复静音（符合“点击才有声”）
   useEffect(() => {
     const onFsChange = () => {
       const fsEl = document.fullscreenElement;
-      setIsFullscreen(!!fsEl);
+      const fs = !!fsEl;
+      setIsFullscreen(fs);
+
+      const el = videoRef.current;
+      if (!el) return;
+
+      // 退出全屏后回到静音自动播放状态
+      if (!fs) {
+        el.muted = true;
+        el.volume = 0;
+        el.play().catch(() => {});
+      }
     };
+
     document.addEventListener("fullscreenchange", onFsChange);
     return () => document.removeEventListener("fullscreenchange", onFsChange);
   }, []);
@@ -45,29 +74,40 @@ export default function IconicVideoCard({
     const el = videoRef.current;
     if (!el) return;
 
-    // 如果已全屏：退出全屏
+    // 已全屏：退出
     if (document.fullscreenElement) {
-      await document.exitFullscreen().catch(() => {});
-      // 退出后你要不要继续有声？你说“再单击退出全屏”，没要求静音，我就不改它
+      await document.exitFullscreen().catch((err) => {
+        console.log("[IconicVideoCard] exitFullscreen failed:", err);
+      });
       return;
     }
 
-    // 未全屏：进入全屏 + 开声音播放
-    el.muted = false; // ✅ 用户点击手势里解除静音才有效
-    el.volume = 1;
+    try {
+      // 用户点击手势内：解除静音 + 播放
+      el.muted = false;
+      el.volume = 1;
 
-    // 进入全屏（标准）
-    if (el.requestFullscreen) {
-      await el.requestFullscreen().catch(() => {});
-    }
-    // iOS Safari 兜底（部分机型）
-    // @ts-ignore
-    if (el.webkitEnterFullscreen) {
+      await waitUntilPlayable(el);
+      await el.play().catch((err) => {
+        console.log("[IconicVideoCard] play on click blocked:", err);
+      });
+
+      // 进入全屏（标准）
+      if (el.requestFullscreen) {
+        await el.requestFullscreen().catch((err) => {
+          console.log("[IconicVideoCard] requestFullscreen failed:", err);
+        });
+      }
+
+      // iOS Safari 兜底（部分机型）
       // @ts-ignore
-      el.webkitEnterFullscreen();
+      if (el.webkitEnterFullscreen) {
+        // @ts-ignore
+        el.webkitEnterFullscreen();
+      }
+    } catch (err) {
+      console.log("[IconicVideoCard] toggle failed:", err);
     }
-
-    el.play().catch(() => {});
   };
 
   return (
@@ -77,26 +117,38 @@ export default function IconicVideoCard({
     >
       <video
         ref={videoRef}
-        src={src}
         className="absolute inset-0 w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-opacity duration-700"
         playsInline
         muted
         loop
         autoPlay
         preload="metadata"
-      />
+        crossOrigin="anonymous"
+        // ✅ 这三条用来“抓真凶”
+        onError={(e) => {
+          console.log(
+            "[IconicVideoCard] VIDEO onError:",
+            e.currentTarget.error,
+            src
+          );
+        }}
+        onLoadedMetadata={() => console.log("[IconicVideoCard] loadedMetadata:", src)}
+        onCanPlay={() => console.log("[IconicVideoCard] canPlay:", src)}
+      >
+        <source src={src} type="video/mp4" />
+      </video>
 
       {/* 微弱玻璃遮罩，让文字更融入你的风格 */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent pointer-events-none" />
 
       {/* 左上角标题 */}
-      <div className="absolute top-6 left-6 z-10 text-xs md:text-sm text-zinc-200 tracking-widest uppercase">
+      <div className="absolute top-6 left-6 z-10 text-xs md:text-sm text-zinc-200 tracking-widest uppercase pointer-events-none">
         Moonbyul Moment
       </div>
 
       {/* 左下角标题（可选） */}
       {title && (
-        <div className="absolute bottom-6 left-6 right-6 z-10">
+        <div className="absolute bottom-6 left-6 right-6 z-10 pointer-events-none">
           <div className="text-sm md:text-base text-white/90 font-semibold">
             {title}
           </div>
@@ -108,3 +160,4 @@ export default function IconicVideoCard({
     </div>
   );
 }
+
