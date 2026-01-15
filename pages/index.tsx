@@ -148,7 +148,7 @@ export default function Home() {
         <section className="max-w-[1700px] mx-auto px-6 md:px-16">
           <div className="flex items-center gap-6 md:gap-12 mb-16 md:mb-32">
             <span className="text-sm md:text-xl font-mono tracking-widest text-violet-300 font-bold uppercase">
-              Film 02 // Cinematic
+              Film 01 // Cinematic
             </span>
             <div className="h-[1px] md:h-[2px] flex-1 bg-gradient-to-r from-violet-600 to-transparent" />
           </div>

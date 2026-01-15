@@ -11,9 +11,6 @@ export const MOONBYUL_IMAGES = [
   { id: 8, src: "/images/紫发星.png" },
   { id: 9, src: "/images/西装星.png" },
   { id: 10, src: "/images/飞吻星.jpg" },
-  { id: 10, src: "https://images.unsplash.com/photo-1464802686167-b939a6910659?q=80&w=1000", title: "Starry Night" },
-  { id: 11, src: "https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=1000", title: "Cosmic Soul" },
-  // 更多图片...
 ];
 
 export const MOONBYUL_ICONIC = [
