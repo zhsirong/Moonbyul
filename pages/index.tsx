@@ -14,7 +14,7 @@ export default function Home() {
   const handleSendMessage = () => {
   if (!inputText.trim()) return;
 
-  // ✅ 放在这里：函数内部，newDanmu 之前
+  // 放在这里：函数内部，newDanmu 之前
   const isMobile =
     typeof window !== "undefined" && window.innerWidth < 768;
 
@@ -92,6 +92,9 @@ export default function Home() {
             The Soloist & Muse / 玟星
           </p>
         </header>
+<p className="mt-10 max-w-[680px] mx-auto text-sm md:text-base text-zinc-300 leading-relaxed tracking-wide">
+  Moonbyul is a soloist who turns restraint into power — a voice that speaks softly, yet never fades.
+</p>
 
         {/* Section 01: 图片画廊 */}
         <main className="max-w-[1400px] mx-auto px-6 md:px-16 mb-48 md:mb-80">
